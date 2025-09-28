@@ -8,7 +8,6 @@ on:
 
 permissions:
   contents: read
-  id-token: write
 
 # This workflow will perform a publish whenever it is triggered
 # If you are using a fork, and want to push tags you can disable this workflow in the github ui
@@ -16,12 +15,16 @@ jobs:
   prepare:
     name: Prepare package
     runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.do-publish.outputs.tag }}
+      prerelease: ${{ steps.do-publish.outputs.prerelease }}
     timeout-minutes: 15
 
     steps:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
+          persist-credentials: false
       - name: Use Node.js 22.x
         uses: actions/setup-node@v4
         with:
@@ -76,9 +79,48 @@ jobs:
           yarn build
         env:
           CI: true
+
+      - name: Pack release
+        run: |
+          # Create a tarball of the repository excluding node_modules, .git and workflow files
+          tar --exclude='.git' --exclude='node_modules' --exclude='.github' -czf release.tar.gz .
+      - name: Upload release artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release
+          path: release.tar.gz
+          retention-days: 1
+          if-no-files-found: error
+
+  publish:
+    name: Publish to NPM
+    needs: prepare
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # scoped for as short as possible, as this gives write access to npm
+
+    steps:
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+
+      - name: Download release artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: release
+          path: .
+      - name: Extract release
+        run: |
+          tar -xzf release.tar.gz
+
       - name: Publish to NPM
         run: |
-          yarn npm publish --access=public --provenance --tag ${{ steps.do-publish.outputs.tag }}
+          corepack enable
+
+          # Publish from the extracted release (build output present)
+          yarn npm publish --access=public --provenance --tag ${{ needs.prepare.outputs.tag }}
 
           NEW_VERSION=$(node -p "require('./package.json').version")
           echo "**Published:** $NEW_VERSION" >> $GITHUB_STEP_SUMMARY
