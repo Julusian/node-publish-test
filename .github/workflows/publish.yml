@@ -122,6 +122,7 @@ jobs:
       - name: Publish to NPM
         run: |
           corepack enable
+          yarn install
 
           # Publish from the extracted release (build output present)
           yarn npm publish --access=public --provenance --tag ${{ needs.prepare.outputs.tag }}
