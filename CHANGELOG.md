@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.1](https://github.com/Julusian/node-publish-test/compare/v1.0.0...v1.0.1) (2025-09-28)
+
+
+### Bug Fixes
+
+* archive ([c563342](https://github.com/Julusian/node-publish-test/commit/c563342fbb6e8aa272d549c51cc2549ee3c679cd))
+* inst ([c3b34e3](https://github.com/Julusian/node-publish-test/commit/c3b34e356ad3251ee58d254ee9eb5412a6ae326c))
+* name ([0eb01be](https://github.com/Julusian/node-publish-test/commit/0eb01be6ab932db32ff46987d72c4356f2614354))
+* pub ([778bbad](https://github.com/Julusian/node-publish-test/commit/778bbad39637b0c20cc10b54040bdccddf1e67a7))
+* run tests ([fb0f7a8](https://github.com/Julusian/node-publish-test/commit/fb0f7a83adff73fe8117ae082deed2a1bfcd8da1))
+* test ([6215e47](https://github.com/Julusian/node-publish-test/commit/6215e47d68cba2ecde9516812ca2abff323ef594))
+
 ## 1.0.0 (2025-09-28)
 
 
