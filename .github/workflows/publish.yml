@@ -86,15 +86,13 @@ jobs:
         env:
           CI: true
 
-      - name: Pack release
-        run: |
-          # Create a tarball of the repository excluding node_modules, .git and workflow files
-          tar --exclude='.git' --exclude='node_modules' --exclude='.github' --exclude='release.tar.gz' -czf release.tar.gz .
       - name: Upload release artifact
         uses: actions/upload-artifact@v4
         with:
-          name: release
-          path: release.tar.gz
+          name: publish-dist
+          path: |
+            dist
+            package.json
           retention-days: 1
           if-no-files-found: error
 
@@ -107,6 +105,10 @@ jobs:
       id-token: write # scoped for as short as possible, as this gives write access to npm
 
     steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          persist-credentials: false
       - name: Use Node.js 22.x
         uses: actions/setup-node@v4
         with:
@@ -115,11 +117,7 @@ jobs:
       - name: Download release artifact
         uses: actions/download-artifact@v4
         with:
-          name: release
-          path: .
-      - name: Extract release
-        run: |
-          tar -xzf release.tar.gz
+          name: publish-dist
 
       - name: Publish to NPM
         run: |
