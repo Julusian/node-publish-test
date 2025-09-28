@@ -210,6 +210,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@julusian/test-lib@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@julusian/test-lib@workspace:."
+  dependencies:
+    "@tsconfig/node20": "npm:^20.1.5"
+    "@types/node": "npm:^20.17.50"
+    prettier: "npm:^3.5.3"
+    rimraf: "npm:^6.0.1"
+    typescript: "npm:~5.8.3"
+    vitest: "npm:^3.1.4"
+  languageName: unknown
+  linkType: soft
+
 "@npmcli/agent@npm:^3.0.0":
   version: 3.0.0
   resolution: "@npmcli/agent@npm:3.0.0"
@@ -1637,19 +1650,6 @@ __metadata:
   checksum: 10c0/39117e346ff8ebd87ae1510b3a77d5d92dae5a89bde588c747d25da5c146603a99c8ee588c7ef80faaf123d89ed46f6dbd918d534d641083177d5fac38b8a1cb
   languageName: node
   linkType: hard
-
-"udev-generator@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "udev-generator@workspace:."
-  dependencies:
-    "@tsconfig/node20": "npm:^20.1.5"
-    "@types/node": "npm:^20.17.50"
-    prettier: "npm:^3.5.3"
-    rimraf: "npm:^6.0.1"
-    typescript: "npm:~5.8.3"
-    vitest: "npm:^3.1.4"
-  languageName: unknown
-  linkType: soft
 
 "undici-types@npm:~6.19.2":
   version: 6.19.8
