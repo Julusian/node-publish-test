@@ -3,11 +3,15 @@ name: Publish Release
 on:
   push:
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+*'
+      - "v[0-9]+.[0-9]+.[0-9]+*"
   workflow_dispatch:
 
 permissions:
   contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 # This workflow will perform a publish whenever it is triggered
 # If you are using a fork, and want to push tags you can disable this workflow in the github ui
@@ -46,7 +50,7 @@ jobs:
             
             PRERELEASE_TAG=nightly-$(echo "${{ github.ref_name }}" | sed -r 's/[^a-z0-9]+/-/gi')
             echo "prerelease=${PRERELEASE_TAG}" >> $GITHUB_OUTPUT
-          
+
           else
             # Otherwise (push by tag), keep the previous logic: compare published vs package.json
             PUBLISHED_VERSION=$(yarn npm info --json @loupedeck/core | jq -c '.version' -r)
