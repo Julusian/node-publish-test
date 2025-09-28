@@ -87,7 +87,7 @@ jobs:
       - name: Pack release
         run: |
           # Create a tarball of the repository excluding node_modules, .git and workflow files
-          tar --exclude='.git' --exclude='node_modules' --exclude='.github' -czf release.tar.gz .
+          tar --exclude='.git' --exclude='node_modules' --exclude='.github' --exclude='release.tar.gz' -czf release.tar.gz .
       - name: Upload release artifact
         uses: actions/upload-artifact@v4
         with:
