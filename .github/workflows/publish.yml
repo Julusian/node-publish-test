@@ -78,7 +78,7 @@ jobs:
           # Bump to prerelease version if needed
           if [ "${{ steps.do-publish.outputs.prerelease }}" != "" ]; then
             OLD_VERSION=$(node -p "require('./package.json').version")
-            yarn set version ${OLD_VERSION}-${{ steps.do-publish.outputs.prerelease }}
+            yarn version ${OLD_VERSION}-${{ steps.do-publish.outputs.prerelease }}
             # yarn release --prerelease ${{ steps.do-publish.outputs.prerelease }}
           fi
 
